@@ -1,97 +1,222 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# TourExpense - Group Tour Expense Tracker
 
-# Getting Started
+A comprehensive React Native app for tracking and splitting expenses during group tours and trips. Perfect for managing shared costs with friends, family, or colleagues during travel.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+### 🌟 Core Features
+- **Multi-Tour Support**: Create separate expense groups for different trips
+- **Participant Management**: Add/remove participants with custom avatars and colors
+- **Smart Expense Splitting**: Track who paid what and who participated in each expense
+- **Category Organization**: 7 expense categories with icons (Food, Transportation, Accommodation, etc.)
+- **Advanced Analytics**: Detailed expense summaries and participant balances
+- **Settlement Suggestions**: Smart algorithms to minimize the number of transactions needed
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### 📱 User Experience
+- **Premium UI Design**: Modern Material Design with cards, shadows, and smooth animations
+- **Intuitive Navigation**: Bottom tab navigation with stack navigation for detailed views
+- **Offline Storage**: All data persisted locally using AsyncStorage
+- **Real-time Updates**: Changes sync immediately across all screens
+- **Empty States**: Helpful guidance when no data is available
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### 📊 Analytics & Insights
+- **Overview Dashboard**: Quick stats and category breakdowns
+- **Individual Balances**: See who owes what and who is owed money
+- **Settlement Calculator**: Optimal payment suggestions to settle all debts
+- **Expense History**: Detailed view of all transactions with filters
 
-```sh
-# Using npm
-npm start
+## Tech Stack
 
-# OR using Yarn
-yarn start
+- **React Native 0.81.1** - Cross-platform mobile development
+- **TypeScript** - Type safety and better development experience
+- **React Navigation 7** - Navigation with stack and tab navigators
+- **React Context + useReducer** - State management
+- **AsyncStorage** - Local data persistence
+- **React Native Vector Icons** - Material Design icons
+- **React Native Safe Area Context** - Safe area handling
+
+## Getting Started
+
+### Prerequisites
+- Node.js >= 18
+- React Native development environment set up ([Guide](https://reactnative.dev/docs/environment-setup))
+- Android Studio (for Android development)
+- Xcode (for iOS development)
+
+### Installation
+
+1. Install dependencies:
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
+2. For iOS, install CocoaPods dependencies:
+```bash
+cd ios && pod install && cd ..
+```
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+3. Start the Metro server:
+```bash
+npm start
+```
 
-### Android
-
-```sh
-# Using npm
+4. Run the app:
+```bash
+# For Android
 npm run android
 
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# For iOS
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Project Structure
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```
+src/
+├── components/          # Reusable UI components
+│   ├── Avatar.tsx       # User avatar component
+│   ├── Button.tsx       # Custom button component
+│   ├── Card.tsx         # Card container component
+│   └── Input.tsx        # Text input component
+├── context/            # React Context for state management
+│   └── AppContext.tsx  # Main app state and actions
+├── navigation/         # Navigation configuration
+│   └── AppNavigator.tsx # Stack and tab navigators
+├── screens/            # Screen components
+│   ├── ToursListScreen.tsx      # Main tours list
+│   ├── CreateTourScreen.tsx     # Create new tour
+│   ├── TourDetailsScreen.tsx    # Tour overview
+│   ├── ParticipantsScreen.tsx   # Manage participants
+│   ├── AddExpenseScreen.tsx     # Add new expense
+│   ├── EditExpenseScreen.tsx    # Edit existing expense
+│   └── ExpenseSummaryScreen.tsx # Analytics and summaries
+├── types/              # TypeScript type definitions
+│   └── index.ts        # Main types and interfaces
+└── utils/              # Utility functions
+    └── calculations.ts # Expense calculations and helpers
+```
 
-## Step 3: Modify your app
+## Key Features Explained
 
-Now that you have successfully run the app, let's make changes!
+### Expense Splitting Algorithm
+The app uses a fair splitting algorithm that:
+1. Calculates each participant's share based on their participation in individual expenses
+2. Tracks who paid what amount
+3. Computes net balances (who owes vs who is owed)
+4. Suggests optimal settlements to minimize transaction count
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### Settlement Optimization
+The settlement algorithm minimizes the number of required transactions by:
+1. Identifying creditors (people owed money) and debtors (people who owe money)
+2. Pairing them optimally to reduce the total number of transactions
+3. Providing step-by-step payment instructions
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### Data Persistence
+- All data is stored locally using AsyncStorage
+- Automatic save on every change
+- Data loads automatically on app startup
+- No internet connection required
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## Usage Guide
 
-## Congratulations! :tada:
+1. **Create a Tour**: Start by creating a new tour with title, dates, and description
+2. **Add Participants**: Add all people who will be sharing expenses
+3. **Track Expenses**: Add expenses specifying:
+   - Who paid the amount
+   - Who participated in the expense
+   - Category and description
+4. **View Summary**: Check the analytics tab for:
+   - Total expenses and per-person averages
+   - Individual balances
+   - Settlement recommendations
 
-You've successfully run and modified your React Native App. :partying_face:
+## App Screenshots & Flow
 
-### Now what?
+### Main Flow:
+1. **Tours List** → **Create Tour** → **Add Participants** → **Add Expenses** → **View Summary**
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+### Key Screens:
+- **Tours List**: Overview of all your tours with quick stats
+- **Tour Details**: Comprehensive tour overview with recent expenses and participant list
+- **Participants Management**: Add/remove/edit participants with color customization
+- **Add/Edit Expense**: Detailed form with category selection and participant management
+- **Summary Analytics**: 4 tabs - Overview, Expenses, Balances, and Settlement suggestions
 
-# Troubleshooting
+## Development
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+### Code Quality
+- TypeScript for type safety
+- ESLint for code linting
+- Prettier for code formatting (configured)
 
-# Learn More
+### Available Scripts
+```bash
+npm start          # Start Metro bundler
+npm run android    # Run on Android
+npm run ios        # Run on iOS
+npm run lint       # Run ESLint
+npm test          # Run tests
+```
 
-To learn more about React Native, take a look at the following resources:
+### Building for Production
+```bash
+# Android
+cd android && ./gradlew assembleRelease
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# iOS
+# Use Xcode to archive and export
+```
+
+## Architecture Highlights
+
+### State Management
+- Uses React Context + useReducer for predictable state management
+- All data flows through a single AppContext
+- Actions clearly defined for all operations (CRUD for tours, participants, expenses)
+
+### Navigation Structure
+- Stack navigator for main flow
+- Tab navigator for main sections (Tours, Summary)
+- Type-safe navigation with TypeScript parameter lists
+
+### Data Models
+- **Tour**: Contains participants and expenses
+- **Participant**: Has unique ID, name, and color
+- **Expense**: Tracks amount, payer, participants, category, and date
+- **Calculations**: Advanced algorithms for balance and settlement calculations
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests and linting (`npm run lint && npm test`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## Future Enhancements
+
+- [ ] Cloud sync and backup
+- [ ] Export to PDF/CSV
+- [ ] Receipt photo attachments
+- [ ] Multi-currency support
+- [ ] Push notifications for expense reminders
+- [ ] Integration with payment apps
+- [ ] Expense splitting by percentage or custom amounts
+- [ ] Budget tracking and alerts
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For questions, suggestions, or issues:
+- Open a GitHub issue
+- Check the troubleshooting section above
+- Review React Native documentation for environment setup issues
+
+---
+
+**Built with ❤️ using React Native and TypeScript**
