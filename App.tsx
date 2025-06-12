@@ -2,7 +2,6 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider } from './src/context/AppContext';
 import AppNavigator from './src/navigation/AppNavigator';
-import 'react-native-gesture-handler';
 
 function App() {
   return (
