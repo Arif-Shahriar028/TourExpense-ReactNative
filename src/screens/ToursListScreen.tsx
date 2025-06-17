@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useApp } from '../context/AppContext';
@@ -20,7 +20,7 @@ import Avatar from '../components/Avatar';
 import { formatDate, formatCurrency } from '../utils/calculations';
 import { Tour } from '../types';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'Main'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
 
 const ToursListScreen: React.FC = () => {
   const { tours, loading } = useApp();

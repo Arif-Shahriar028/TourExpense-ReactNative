@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -16,7 +16,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'EditTour'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'EditTour'>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'EditTour'>;
 
 const EditTourScreen: React.FC = () => {

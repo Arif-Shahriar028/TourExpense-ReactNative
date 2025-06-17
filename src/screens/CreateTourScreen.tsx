@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -18,7 +18,7 @@ import Input from '../components/Input';
 import { generateId } from '../utils/calculations';
 import { Tour } from '../types';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'CreateTour'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'CreateTour'>;
 
 const CreateTourScreen: React.FC = () => {
   const { dispatch } = useApp();
