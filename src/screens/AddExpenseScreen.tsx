@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -20,7 +20,7 @@ import Avatar from '../components/Avatar';
 import { generateId } from '../utils/calculations';
 import { Expense, EXPENSE_CATEGORIES, CATEGORY_ICONS, CATEGORY_COLORS } from '../types';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'AddExpense'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'AddExpense'>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'AddExpense'>;
 
 const AddExpenseScreen: React.FC = () => {
