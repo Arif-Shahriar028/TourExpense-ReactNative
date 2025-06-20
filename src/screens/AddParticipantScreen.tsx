@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -20,7 +20,7 @@ import Avatar from '../components/Avatar';
 import { generateId, generateParticipantColor } from '../utils/calculations';
 import { Participant } from '../types';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'AddParticipant'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'AddParticipant'>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'AddParticipant'>;
 
 const AddParticipantScreen: React.FC = () => {

@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useApp } from '../context/AppContext';
@@ -19,7 +19,7 @@ import Button from '../components/Button';
 import Avatar from '../components/Avatar';
 import { Participant } from '../types';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'Participants'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Participants'>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'Participants'>;
 
 const ParticipantsScreen: React.FC = () => {
