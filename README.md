@@ -1,222 +1,261 @@
-# TourExpense - Group Tour Expense Tracker
+# 🧳 TourExpense - Group Tour Expense Tracker
 
-A comprehensive React Native app for tracking and splitting expenses during group tours and trips. Perfect for managing shared costs with friends, family, or colleagues during travel.
+<div align="center">
 
-## Features
+  ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+  ![Version](https://img.shields.io/badge/version-0.0.1-blue?style=for-the-badge)
+  ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
-### 🌟 Core Features
-- **Multi-Tour Support**: Create separate expense groups for different trips
-- **Participant Management**: Add/remove participants with custom avatars and colors
-- **Smart Expense Splitting**: Track who paid what and who participated in each expense
-- **Category Organization**: 7 expense categories with icons (Food, Transportation, Accommodation, etc.)
-- **Advanced Analytics**: Detailed expense summaries and participant balances
-- **Settlement Suggestions**: Smart algorithms to minimize the number of transactions needed
+  **A comprehensive React Native app for tracking and splitting expenses during group tours and trips**
 
-### 📱 User Experience
-- **Premium UI Design**: Modern Material Design with cards, shadows, and smooth animations
-- **Intuitive Navigation**: Bottom tab navigation with stack navigation for detailed views
-- **Offline Storage**: All data persisted locally using AsyncStorage
-- **Real-time Updates**: Changes sync immediately across all screens
-- **Empty States**: Helpful guidance when no data is available
+  *Perfect for managing shared costs with friends, family, or colleagues during travel* 🌍
 
-### 📊 Analytics & Insights
-- **Overview Dashboard**: Quick stats and category breakdowns
-- **Individual Balances**: See who owes what and who is owed money
-- **Settlement Calculator**: Optimal payment suggestions to settle all debts
-- **Expense History**: Detailed view of all transactions with filters
-
-## Tech Stack
-
-- **React Native 0.81.1** - Cross-platform mobile development
-- **TypeScript** - Type safety and better development experience
-- **React Navigation 7** - Navigation with stack and tab navigators
-- **React Context + useReducer** - State management
-- **AsyncStorage** - Local data persistence
-- **React Native Vector Icons** - Material Design icons
-- **React Native Safe Area Context** - Safe area handling
-
-## Getting Started
-
-### Prerequisites
-- Node.js >= 18
-- React Native development environment set up ([Guide](https://reactnative.dev/docs/environment-setup))
-- Android Studio (for Android development)
-- Xcode (for iOS development)
-
-### Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. For iOS, install CocoaPods dependencies:
-```bash
-cd ios && pod install && cd ..
-```
-
-3. Start the Metro server:
-```bash
-npm start
-```
-
-4. Run the app:
-```bash
-# For Android
-npm run android
-
-# For iOS
-npm run ios
-```
-
-## Project Structure
-
-```
-src/
-├── components/          # Reusable UI components
-│   ├── Avatar.tsx       # User avatar component
-│   ├── Button.tsx       # Custom button component
-│   ├── Card.tsx         # Card container component
-│   └── Input.tsx        # Text input component
-├── context/            # React Context for state management
-│   └── AppContext.tsx  # Main app state and actions
-├── navigation/         # Navigation configuration
-│   └── AppNavigator.tsx # Stack and tab navigators
-├── screens/            # Screen components
-│   ├── ToursListScreen.tsx      # Main tours list
-│   ├── CreateTourScreen.tsx     # Create new tour
-│   ├── TourDetailsScreen.tsx    # Tour overview
-│   ├── ParticipantsScreen.tsx   # Manage participants
-│   ├── AddExpenseScreen.tsx     # Add new expense
-│   ├── EditExpenseScreen.tsx    # Edit existing expense
-│   └── ExpenseSummaryScreen.tsx # Analytics and summaries
-├── types/              # TypeScript type definitions
-│   └── index.ts        # Main types and interfaces
-└── utils/              # Utility functions
-    └── calculations.ts # Expense calculations and helpers
-```
-
-## Key Features Explained
-
-### Expense Splitting Algorithm
-The app uses a fair splitting algorithm that:
-1. Calculates each participant's share based on their participation in individual expenses
-2. Tracks who paid what amount
-3. Computes net balances (who owes vs who is owed)
-4. Suggests optimal settlements to minimize transaction count
-
-### Settlement Optimization
-The settlement algorithm minimizes the number of required transactions by:
-1. Identifying creditors (people owed money) and debtors (people who owe money)
-2. Pairing them optimally to reduce the total number of transactions
-3. Providing step-by-step payment instructions
-
-### Data Persistence
-- All data is stored locally using AsyncStorage
-- Automatic save on every change
-- Data loads automatically on app startup
-- No internet connection required
-
-## Usage Guide
-
-1. **Create a Tour**: Start by creating a new tour with title, dates, and description
-2. **Add Participants**: Add all people who will be sharing expenses
-3. **Track Expenses**: Add expenses specifying:
-   - Who paid the amount
-   - Who participated in the expense
-   - Category and description
-4. **View Summary**: Check the analytics tab for:
-   - Total expenses and per-person averages
-   - Individual balances
-   - Settlement recommendations
-
-## App Screenshots & Flow
-
-### Main Flow:
-1. **Tours List** → **Create Tour** → **Add Participants** → **Add Expenses** → **View Summary**
-
-### Key Screens:
-- **Tours List**: Overview of all your tours with quick stats
-- **Tour Details**: Comprehensive tour overview with recent expenses and participant list
-- **Participants Management**: Add/remove/edit participants with color customization
-- **Add/Edit Expense**: Detailed form with category selection and participant management
-- **Summary Analytics**: 4 tabs - Overview, Expenses, Balances, and Settlement suggestions
-
-## Development
-
-### Code Quality
-- TypeScript for type safety
-- ESLint for code linting
-- Prettier for code formatting (configured)
-
-### Available Scripts
-```bash
-npm start          # Start Metro bundler
-npm run android    # Run on Android
-npm run ios        # Run on iOS
-npm run lint       # Run ESLint
-npm test          # Run tests
-```
-
-### Building for Production
-```bash
-# Android
-cd android && ./gradlew assembleRelease
-
-# iOS
-# Use Xcode to archive and export
-```
-
-## Architecture Highlights
-
-### State Management
-- Uses React Context + useReducer for predictable state management
-- All data flows through a single AppContext
-- Actions clearly defined for all operations (CRUD for tours, participants, expenses)
-
-### Navigation Structure
-- Stack navigator for main flow
-- Tab navigator for main sections (Tours, Summary)
-- Type-safe navigation with TypeScript parameter lists
-
-### Data Models
-- **Tour**: Contains participants and expenses
-- **Participant**: Has unique ID, name, and color
-- **Expense**: Tracks amount, payer, participants, category, and date
-- **Calculations**: Advanced algorithms for balance and settlement calculations
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests and linting (`npm run lint && npm test`)
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-## Future Enhancements
-
-- [ ] Cloud sync and backup
-- [ ] Export to PDF/CSV
-- [ ] Receipt photo attachments
-- [ ] Multi-currency support
-- [ ] Push notifications for expense reminders
-- [ ] Integration with payment apps
-- [ ] Expense splitting by percentage or custom amounts
-- [ ] Budget tracking and alerts
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For questions, suggestions, or issues:
-- Open a GitHub issue
-- Check the troubleshooting section above
-- Review React Native documentation for environment setup issues
+</div>
 
 ---
 
-**Built with ❤️ using React Native and TypeScript**
+## 📱 App Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="assets/tour_details.jpg" width="200" alt="Tour Details"/>
+        <br/><b>Tour Overview</b>
+      </td>
+      <td align="center">
+        <img src="assets/participants_list.jpg" width="200" alt="Participants Management"/>
+        <br/><b>Participants Management</b>
+      </td>
+      <td align="center">
+        <img src="assets/add_participants.jpg" width="200" alt="Add Participants"/>
+        <br/><b>Add Participants</b>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="assets/add_expense.jpg" width="200" alt="Add Expense"/>
+        <br/><b>Add New Expense</b>
+      </td>
+      <td align="center">
+        <img src="assets/add_expense_2.jpg" width="200" alt="Expense Details"/>
+        <br/><b>Expense Categories</b>
+      </td>
+      
+    </tr>
+  </table>
+</div>
+
+---
+
+## 🌟 Key Features
+
+### 💰 **Smart Expense Management**
+- **Multi-Tour Support**: Organize expenses by different trips and tours
+- **Flexible Splitting**: Track who paid what and who participated in each expense
+- **7 Expense Categories**: Food, Transportation, Accommodation, Activities, Shopping, Bills, and Other
+- **Real-time Calculations**: Instant balance updates and settlement suggestions
+
+### 👥 **Participant Management**
+- **Custom Avatars**: Personalized participant profiles with color coding
+- **Dynamic Participation**: Flexible expense participation per transaction
+- **Smart Analytics**: Individual spending patterns and balance tracking
+
+### 📊 **Advanced Analytics**
+- **Overview Dashboard**: Quick stats and visual breakdowns
+- **Settlement Optimization**: Minimize transaction count with smart algorithms
+- **Expense History**: Detailed transaction logs with filtering options
+- **Balance Tracking**: Real-time who-owes-what calculations
+
+### 🎨 **Premium User Experience**
+- **Material Design UI**: Modern interface with cards, shadows, and smooth animations
+- **Offline-First**: All data stored locally with AsyncStorage
+- **Type-Safe**: Built with TypeScript for reliability
+- **Responsive Design**: Optimized for all screen sizes
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- **Node.js** >= 20
+- **React Native CLI** or **Expo CLI**
+- **Android Studio** (for Android development)
+- **Xcode** (for iOS development on macOS)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/TourExpense-ReactNative.git
+cd TourExpense-ReactNative
+
+# Install dependencies
+npm install
+
+# For iOS (macOS only)
+cd ios && pod install && cd ..
+
+# Start Metro bundler
+npm start
+
+# Run on device/emulator
+npm run android  # For Android
+npm run ios      # For iOS
+```
+
+---
+
+## 🏗️ Tech Stack & Architecture
+
+<div align="center">
+
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| **React Native** | Cross-platform mobile framework | 0.81.1 |
+| **TypeScript** | Type safety and developer experience | ^5.8.3 |
+| **React Navigation 7** | Navigation system | ^7.x |
+| **AsyncStorage** | Local data persistence | ^2.2.0 |
+| **Vector Icons** | Material Design icons | ^10.3.0 |
+| **React Context** | State management | Built-in |
+
+</div>
+
+### 📁 Project Structure
+```
+src/
+├── 🧩 components/          # Reusable UI components
+│   ├── Avatar.tsx          # Custom avatar component
+│   ├── Button.tsx          # Styled button component
+│   ├── Card.tsx            # Material card container
+│   └── Input.tsx           # Enhanced text input
+├── 🎯 context/             # State management
+│   └── AppContext.tsx      # Global app state & actions
+├── 🧭 navigation/          # Navigation configuration
+│   └── AppNavigator.tsx    # Stack & tab navigators
+├── 📱 screens/             # Screen components
+│   ├── ToursListScreen.tsx      # Main tours overview
+│   ├── CreateTourScreen.tsx     # New tour creation
+│   ├── TourDetailsScreen.tsx    # Tour dashboard
+│   ├── ParticipantsScreen.tsx   # Manage participants
+│   ├── AddExpenseScreen.tsx     # Add/edit expenses
+│   └── ExpenseSummaryScreen.tsx # Analytics & insights
+├── 📋 types/               # TypeScript definitions
+└── 🔧 utils/               # Helper functions & calculations
+```
+
+---
+
+## 💡 How It Works
+
+### 🧮 **Smart Settlement Algorithm**
+1. **Track Contributions**: Records who paid for each expense
+2. **Calculate Shares**: Determines each person's fair share based on participation
+3. **Optimize Settlements**: Minimizes the number of required transactions
+4. **Generate Instructions**: Provides clear step-by-step payment guidance
+
+### 💾 **Data Flow**
+- **Local-First**: All data stored securely on device using AsyncStorage
+- **Instant Sync**: Changes reflect immediately across all screens
+- **Type Safety**: TypeScript ensures data integrity throughout the app
+- **Context Pattern**: Centralized state management with React Context + useReducer
+
+---
+
+## 🎯 Usage Guide
+
+### 1. **Create Your Tour** 🗺️
+Start by setting up a new tour with title, dates, and description
+
+### 2. **Add Participants** 👥
+Invite friends and assign each person a unique color and avatar
+
+### 3. **Track Expenses** 💸
+Log expenses with details about:
+- Who paid the bill
+- Who participated in the expense
+- Category and amount
+- Date and description
+
+### 4. **View Analytics** 📈
+Check comprehensive summaries including:
+- Total spending and averages
+- Individual balances (who owes what)
+- Optimized settlement recommendations
+- Category-wise breakdowns
+
+---
+
+## 🔧 Development
+
+### Available Scripts
+```bash
+npm start      # Start Metro bundler
+npm run android # Run on Android device/emulator
+npm run ios     # Run on iOS device/simulator
+npm run lint    # Run ESLint code analysis
+npm test       # Execute test suite
+```
+
+### Code Quality
+- ✅ **TypeScript** for type safety and IntelliSense
+- ✅ **ESLint** for consistent code style
+- ✅ **Prettier** for automatic code formatting
+- ✅ **Jest** for unit testing
+
+---
+
+## 🔮 Upcoming Features
+
+- [ ] 🌐 **Cloud Sync**: Backup and sync across devices
+- [ ] 📄 **Export Options**: PDF receipts and CSV reports
+- [ ] 📸 **Receipt Scanner**: OCR for automatic expense entry
+- [ ] 💱 **Multi-Currency**: Support for different currencies with live rates
+- [ ] 🔔 **Smart Notifications**: Expense reminders and settlement alerts
+- [ ] 💳 **Payment Integration**: Direct payments through popular apps
+- [ ] 📊 **Advanced Analytics**: Spending trends and budget insights
+- [ ] 🎨 **Themes**: Dark mode and custom color schemes
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how to get started:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Make** your changes with proper TypeScript types
+4. **Test** your changes (`npm test && npm run lint`)
+5. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+6. **Push** to your branch (`git push origin feature/amazing-feature`)
+7. **Open** a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🆘 Support
+
+Need help? We're here for you!
+
+- 🐛 **Bug Reports**: [Open an issue](https://github.com/your-username/TourExpense-ReactNative/issues)
+- 💡 **Feature Requests**: [Start a discussion](https://github.com/your-username/TourExpense-ReactNative/discussions)
+- 📖 **Documentation**: Check our [Wiki](https://github.com/your-username/TourExpense-ReactNative/wiki)
+- ⚙️ **Setup Issues**: Review [React Native Environment Setup](https://reactnative.dev/docs/environment-setup)
+
+---
+
+<div align="center">
+
+## ⭐ Star this repository if it helped you manage your group expenses better!
+
+**Built with ❤️ using React Native, TypeScript, and lots of ☕**
+
+*Happy Travels! 🌟*
+
+</div>
