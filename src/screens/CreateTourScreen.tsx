@@ -18,7 +18,10 @@ import Input from '../components/Input';
 import { generateId } from '../utils/calculations';
 import { Tour } from '../types';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'CreateTour'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'CreateTour'
+>;
 
 const CreateTourScreen: React.FC = () => {
   const { dispatch } = useApp();
@@ -66,22 +69,20 @@ const CreateTourScreen: React.FC = () => {
       };
 
       dispatch({ type: 'ADD_TOUR', payload: newTour });
-      
-      Alert.alert(
-        'Success',
-        'Tour created successfully!',
-        [
-          {
-            text: 'Add Participants',
-            onPress: () => navigation.replace('Participants', { tourId: newTour.id }),
-          },
-          {
-            text: 'View Tour',
-            onPress: () => navigation.replace('TourDetails', { tourId: newTour.id }),
-            style: 'default',
-          },
-        ]
-      );
+
+      Alert.alert('Success', 'Tour created successfully!', [
+        {
+          text: 'Add Participants',
+          onPress: () =>
+            navigation.replace('Participants', { tourId: newTour.id }),
+        },
+        {
+          text: 'View Tour',
+          onPress: () =>
+            navigation.replace('TourDetails', { tourId: newTour.id }),
+          style: 'default',
+        },
+      ]);
     } catch (error) {
       Alert.alert('Error', 'Failed to create tour. Please try again.');
     } finally {
@@ -97,14 +98,12 @@ const CreateTourScreen: React.FC = () => {
       >
         <Card>
           <Text style={styles.sectionTitle}>Tour Information</Text>
-          
+
           <Input
             label="Tour Title *"
-            placeholder="e.g. Goa Trip 2024"
+            placeholder="e.g. Cox's Bazar Trip 2024"
             value={formData.title}
-            onChangeText={(text) =>
-              setFormData({ ...formData, title: text })
-            }
+            onChangeText={text => setFormData({ ...formData, title: text })}
             error={errors.title}
           />
 
@@ -112,7 +111,7 @@ const CreateTourScreen: React.FC = () => {
             label="Description"
             placeholder="Brief description of the tour"
             value={formData.description}
-            onChangeText={(text) =>
+            onChangeText={text =>
               setFormData({ ...formData, description: text })
             }
             multiline
@@ -124,9 +123,7 @@ const CreateTourScreen: React.FC = () => {
             label="Start Date *"
             placeholder="YYYY-MM-DD"
             value={formData.startDate}
-            onChangeText={(text) =>
-              setFormData({ ...formData, startDate: text })
-            }
+            onChangeText={text => setFormData({ ...formData, startDate: text })}
             error={errors.startDate}
           />
 
@@ -134,9 +131,7 @@ const CreateTourScreen: React.FC = () => {
             label="End Date"
             placeholder="YYYY-MM-DD (optional)"
             value={formData.endDate}
-            onChangeText={(text) =>
-              setFormData({ ...formData, endDate: text })
-            }
+            onChangeText={text => setFormData({ ...formData, endDate: text })}
             error={errors.endDate}
           />
         </Card>

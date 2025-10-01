@@ -8,7 +8,11 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  RouteProp as NavigationRouteProp,
+} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
@@ -19,7 +23,10 @@ import Input from '../components/Input';
 import Avatar from '../components/Avatar';
 import { EXPENSE_CATEGORIES, CATEGORY_ICONS, CATEGORY_COLORS } from '../types';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'EditExpense'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'EditExpense'
+>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'EditExpense'>;
 
 const EditExpenseScreen: React.FC = () => {
@@ -133,7 +140,7 @@ const EditExpenseScreen: React.FC = () => {
             navigation.goBack();
           },
         },
-      ]
+      ],
     );
   };
 
@@ -167,24 +174,20 @@ const EditExpenseScreen: React.FC = () => {
       >
         <Card>
           <Text style={styles.sectionTitle}>Expense Details</Text>
-          
+
           <Input
             label="Expense Title *"
             placeholder="e.g. Lunch at Restaurant"
             value={formData.title}
-            onChangeText={(text) =>
-              setFormData({ ...formData, title: text })
-            }
+            onChangeText={text => setFormData({ ...formData, title: text })}
             error={errors.title}
           />
 
           <Input
-            label="Amount (₹) *"
+            label="Amount ($) *"
             placeholder="0.00"
             value={formData.amount}
-            onChangeText={(text) =>
-              setFormData({ ...formData, amount: text })
-            }
+            onChangeText={text => setFormData({ ...formData, amount: text })}
             keyboardType="numeric"
             error={errors.amount}
           />
@@ -193,7 +196,7 @@ const EditExpenseScreen: React.FC = () => {
             label="Description"
             placeholder="Additional notes (optional)"
             value={formData.description}
-            onChangeText={(text) =>
+            onChangeText={text =>
               setFormData({ ...formData, description: text })
             }
             multiline
@@ -205,12 +208,12 @@ const EditExpenseScreen: React.FC = () => {
         <Card>
           <Text style={styles.sectionTitle}>Category</Text>
           <View style={styles.categoryGrid}>
-            {EXPENSE_CATEGORIES.map((category) => (
+            {EXPENSE_CATEGORIES.map(category => (
               <TouchableOpacity
                 key={category}
                 style={[
                   styles.categoryItem,
-                  formData.category === category 
+                  formData.category === category
                     ? { backgroundColor: CATEGORY_COLORS[category] }
                     : styles.unselectedCategory,
                 ]}
@@ -222,7 +225,9 @@ const EditExpenseScreen: React.FC = () => {
                 <Text
                   style={[
                     styles.categoryText,
-                    formData.category === category ? styles.selectedCategoryText : styles.unselectedCategoryText
+                    formData.category === category
+                      ? styles.selectedCategoryText
+                      : styles.unselectedCategoryText,
                   ]}
                 >
                   {category}
@@ -236,14 +241,16 @@ const EditExpenseScreen: React.FC = () => {
           <Text style={styles.sectionTitle}>Who Paid? *</Text>
           {errors.paidBy && <Text style={styles.error}>{errors.paidBy}</Text>}
           <View style={styles.participantsGrid}>
-            {tour.participants.map((participant) => (
+            {tour.participants.map(participant => (
               <TouchableOpacity
                 key={participant.id}
                 style={[
                   styles.payerItem,
                   formData.paidBy === participant.id && styles.selectedPayer,
                 ]}
-                onPress={() => setFormData({ ...formData, paidBy: participant.id })}
+                onPress={() =>
+                  setFormData({ ...formData, paidBy: participant.id })
+                }
               >
                 <Avatar
                   name={participant.name}
@@ -265,14 +272,17 @@ const EditExpenseScreen: React.FC = () => {
               <Text style={styles.selectAllText}>Select All</Text>
             </TouchableOpacity>
           </View>
-          {errors.participants && <Text style={styles.error}>{errors.participants}</Text>}
+          {errors.participants && (
+            <Text style={styles.error}>{errors.participants}</Text>
+          )}
           <View style={styles.participantsGrid}>
-            {tour.participants.map((participant) => (
+            {tour.participants.map(participant => (
               <TouchableOpacity
                 key={participant.id}
                 style={[
                   styles.participantItem,
-                  formData.participants.includes(participant.id) && styles.selectedParticipant,
+                  formData.participants.includes(participant.id) &&
+                    styles.selectedParticipant,
                 ]}
                 onPress={() => toggleParticipant(participant.id)}
               >

@@ -8,8 +8,11 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {
+  useNavigation,
+  useRoute,
+  RouteProp as NavigationRouteProp,
+} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useApp } from '../context/AppContext';
@@ -19,8 +22,12 @@ import Button from '../components/Button';
 import Avatar from '../components/Avatar';
 import { formatDate, formatCurrency } from '../utils/calculations';
 import { CATEGORY_ICONS, CATEGORY_COLORS } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'TourDetails'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'TourDetails'
+>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'TourDetails'>;
 
 const TourDetailsScreen: React.FC = () => {
@@ -54,7 +61,7 @@ const TourDetailsScreen: React.FC = () => {
             navigation.goBack();
           },
         },
-      ]
+      ],
     );
   };
 
@@ -87,7 +94,9 @@ const TourDetailsScreen: React.FC = () => {
         <Card>
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
-              <Text style={styles.statValue}>{formatCurrency(summary?.totalExpenses || 0)}</Text>
+              <Text style={styles.statValue}>
+                {formatCurrency(summary?.totalExpenses || 0)}
+              </Text>
               <Text style={styles.statLabel}>Total Expenses</Text>
             </View>
             <View style={styles.statItem}>
@@ -109,9 +118,9 @@ const TourDetailsScreen: React.FC = () => {
               onPress={() => navigation.navigate('Participants', { tourId })}
             >
               <Icon name="people" size={24} color="#007AFF" />
-              <Text style={styles.actionText}>Manage Participants</Text>
+              <Text style={styles.actionText}>Participants</Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
               style={styles.actionButton}
               onPress={() => navigation.navigate('AddExpense', { tourId })}
@@ -119,7 +128,7 @@ const TourDetailsScreen: React.FC = () => {
               <Icon name="add-circle" size={24} color="#34C759" />
               <Text style={styles.actionText}>Add Expense</Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
               style={styles.actionButton}
               onPress={() => navigation.navigate('ExpenseSummary', { tourId })}
@@ -137,20 +146,29 @@ const TourDetailsScreen: React.FC = () => {
               <Text style={styles.sectionTitle}>Recent Expenses</Text>
               {tour.expenses.length > 3 && (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('ExpenseSummary', { tourId })}
+                  onPress={() =>
+                    navigation.navigate('ExpenseSummary', { tourId })
+                  }
                 >
                   <Text style={styles.viewAllText}>View All</Text>
                 </TouchableOpacity>
               )}
             </View>
-            
-            {tour.expenses.slice(0, 3).map((expense) => {
-              const payer = tour.participants.find(p => p.id === expense.paidBy);
+
+            {tour.expenses.slice(0, 3).map(expense => {
+              const payer = tour.participants.find(
+                p => p.id === expense.paidBy,
+              );
               return (
                 <TouchableOpacity
                   key={expense.id}
                   style={styles.expenseItem}
-                  onPress={() => navigation.navigate('EditExpense', { tourId, expenseId: expense.id })}
+                  onPress={() =>
+                    navigation.navigate('EditExpense', {
+                      tourId,
+                      expenseId: expense.id,
+                    })
+                  }
                 >
                   <View style={styles.expenseLeft}>
                     <View
@@ -190,9 +208,9 @@ const TourDetailsScreen: React.FC = () => {
                 <Text style={styles.viewAllText}>Manage</Text>
               </TouchableOpacity>
             </View>
-            
+
             <View style={styles.participantsGrid}>
-              {tour.participants.map((participant) => (
+              {tour.participants.map(participant => (
                 <View key={participant.id} style={styles.participantItem}>
                   <Avatar
                     name={participant.name}

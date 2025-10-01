@@ -98,7 +98,7 @@ export const generateId = (): string => {
 };
 
 export const formatCurrency = (amount: number): string => {
-  return `₹${amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+  return `$${amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
 };
 
 export const formatDate = (dateString: string): string => {

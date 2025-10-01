@@ -11,25 +11,25 @@ The settlement system solves a common problem in group expenses: **minimizing th
 Without optimization, settling expenses can be complex:
 
 ### Example Scenario
-- **Alice** paid ₹1000 for dinner (shared by Alice, Bob, Charlie)
-- **Bob** paid ₹600 for transport (shared by Alice, Bob, Charlie)  
-- **Charlie** paid ₹300 for snacks (shared by Alice, Bob, Charlie)
+- **Alice** paid $1000 for dinner (shared by Alice, Bob, Charlie)
+- **Bob** paid $600 for transport (shared by Alice, Bob, Charlie)  
+- **Charlie** paid $300 for snacks (shared by Alice, Bob, Charlie)
 
-**Individual shares:** ₹633.33 each
+**Individual shares:** $633.33 each
 
 **Simple calculation:**
-- Alice should receive: ₹1000 - ₹633.33 = **₹366.67**
-- Bob should receive: ₹600 - ₹633.33 = **-₹33.33** (owes)
-- Charlie should receive: ₹300 - ₹633.33 = **-₹333.33** (owes)
+- Alice should receive: $1000 - $633.33 = **$366.67**
+- Bob should receive: $600 - $633.33 = **-$33.33** (owes)
+- Charlie should receive: $300 - $633.33 = **-$333.33** (owes)
 
 **Without optimization:** Multiple transactions needed
-- Bob pays Alice ₹33.33
-- Charlie pays Alice ₹333.33
-- Charlie pays Bob ₹0 (already settled)
+- Bob pays Alice $33.33
+- Charlie pays Alice $333.33
+- Charlie pays Bob $0 (already settled)
 
 **With optimization:** Minimal transactions
-- Charlie pays Alice ₹333.33
-- Bob pays Alice ₹33.33
+- Charlie pays Alice $333.33
+- Bob pays Alice $33.33
 
 ## Algorithm Implementation
 
@@ -135,27 +135,27 @@ The algorithm uses a greedy approach, always trying to settle the largest amount
 
 ### 3. **Precision Handling**
 - Rounds amounts to 2 decimal places
-- Ignores settlements smaller than ₹0.01
+- Ignores settlements smaller than $0.01
 - Prevents floating-point precision errors
 
 ## Visual Example
 
 ### Before Settlement
 ```
-Alice:   +₹366.67  (is owed)
-Bob:     -₹33.33   (owes)
-Charlie: -₹333.33  (owes)
+Alice:   +$366.67  (is owed)
+Bob:     -$33.33   (owes)
+Charlie: -$333.33  (owes)
 ```
 
 ### Algorithm Steps
 
-**Step 1:** Match largest creditor (Alice: ₹366.67) with largest debtor (Charlie: ₹333.33)
-- Settlement: Charlie pays Alice ₹333.33
-- Remaining: Alice: ₹33.34, Charlie: ₹0
+**Step 1:** Match largest creditor (Alice: $366.67) with largest debtor (Charlie: $333.33)
+- Settlement: Charlie pays Alice $333.33
+- Remaining: Alice: $33.34, Charlie: $0
 
-**Step 2:** Match remaining creditor (Alice: ₹33.34) with remaining debtor (Bob: ₹33.33)
-- Settlement: Bob pays Alice ₹33.33
-- Remaining: Alice: ₹0.01, Bob: ₹0
+**Step 2:** Match remaining creditor (Alice: $33.34) with remaining debtor (Bob: $33.33)
+- Settlement: Bob pays Alice $33.33
+- Remaining: Alice: $0.01, Bob: $0
 
 **Final Result:** 2 transactions instead of potentially more complex arrangements
 
@@ -294,7 +294,7 @@ Handle different currencies:
 ```typescript
 export const formatCurrency = (amount: number, currency = 'INR'): string => {
   const formatters = {
-    INR: (amt: number) => `₹${amt.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`,
+    INR: (amt: number) => `$${amt.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`,
     USD: (amt: number) => `$${amt.toLocaleString('en-US', { maximumFractionDigits: 2 })}`,
     EUR: (amt: number) => `€${amt.toLocaleString('en-EU', { maximumFractionDigits: 2 })}`,
   };

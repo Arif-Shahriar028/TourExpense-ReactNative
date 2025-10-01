@@ -65,7 +65,7 @@ interface AppState {
 ```typescript
 interface Tour {
   id: string;                    // Unique identifier
-  title: string;                 // "Goa Trip 2024"
+  title: string;                 // "Cox's Bazar Trip 2024"
   description?: string;          // Optional tour description
   startDate: string;            // ISO date string
   endDate?: string;             // Optional end date

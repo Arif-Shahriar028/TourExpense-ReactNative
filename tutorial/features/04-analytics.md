@@ -61,7 +61,7 @@ const totalExpenses = tour.expenses.reduce((sum, expense) => sum + expense.amoun
 - Summary cards in ExpenseSummaryScreen  
 - Progress indicators and statistics
 
-**Example:** If you have expenses of ₹500, ₹300, and ₹200, totalExpenses = ₹1000
+**Example:** If you have expenses of $500, $300, and $200, totalExpenses = $1000
 
 #### `averagePerPerson: number`
 **Purpose:** How much each person should ideally spend for equal sharing.
@@ -73,7 +73,7 @@ const averagePerPerson = totalExpenses / totalParticipants;
 
 **Why it matters:** This is the baseline for calculating who owes money and who should receive money.
 
-**Example:** ₹1000 total ÷ 4 people = ₹250 per person
+**Example:** $1000 total ÷ 4 people = $250 per person
 
 #### `participantSummaries: ParticipantSummary[]`
 **Purpose:** Detailed breakdown for each participant.
@@ -119,9 +119,9 @@ const calculateParticipantSummary = (participant: Participant, tour: Tour) => {
 ```
 
 **Real Example:**
-- **Alice** paid ₹800 for hotel, restaurant (totalPaid = ₹800)
-- **Alice** participated in hotel ₹600÷4 = ₹150, restaurant ₹400÷3 = ₹133 (totalShare = ₹283)
-- **Alice's balance** = ₹800 - ₹283 = +₹517 (Alice is owed ₹517)
+- **Alice** paid $800 for hotel, restaurant (totalPaid = $800)
+- **Alice** participated in hotel $600÷4 = $150, restaurant $400÷3 = $133 (totalShare = $283)
+- **Alice's balance** = $800 - $283 = +$517 (Alice is owed $517)
 
 #### `categoryBreakdowns: CategoryBreakdown[]`
 **Purpose:** Shows spending patterns by expense categories.
@@ -214,7 +214,7 @@ const calculateOptimalSettlements = (participantSummaries: ParticipantSummary[])
       from: debtor.participant,
       to: creditor.participant,
       amount: paymentAmount,
-      description: `${debtor.participant.name} pays ₹${paymentAmount} to ${creditor.participant.name}`,
+      description: `${debtor.participant.name} pays $${paymentAmount} to ${creditor.participant.name}`,
     });
     
     // 5. Update remaining amounts
@@ -233,15 +233,15 @@ const calculateOptimalSettlements = (participantSummaries: ParticipantSummary[])
 **Algorithm Example:**
 ```
 Initial Balances:
-- Alice: +₹300 (owed)
-- Bob: -₹150 (owes)  
-- Charlie: -₹100 (owes)
-- David: -₹50 (owes)
+- Alice: +$300 (owed)
+- Bob: -$150 (owes)  
+- Charlie: -$100 (owes)
+- David: -$50 (owes)
 
 Optimal Settlements:
-1. Bob pays ₹150 to Alice (Alice now owed ₹150, Bob settled)
-2. Charlie pays ₹100 to Alice (Alice now owed ₹50, Charlie settled)  
-3. David pays ₹50 to Alice (Everyone settled)
+1. Bob pays $150 to Alice (Alice now owed $150, Bob settled)
+2. Charlie pays $100 to Alice (Alice now owed $50, Charlie settled)  
+3. David pays $50 to Alice (Everyone settled)
 
 Result: 3 transactions instead of potentially 6 transactions with direct payments
 ```
@@ -304,12 +304,12 @@ const renderOverviewTab = () => {
       {/* Key Metrics Cards */}
       <View style={styles.metricsRow}>
         <Card style={styles.metricCard}>
-          <Text style={styles.metricValue}>₹{tourSummary.totalExpenses}</Text>
+          <Text style={styles.metricValue}>${tourSummary.totalExpenses}</Text>
           <Text style={styles.metricLabel}>Total Expenses</Text>
         </Card>
         
         <Card style={styles.metricCard}>
-          <Text style={styles.metricValue}>₹{tourSummary.averagePerPerson}</Text>
+          <Text style={styles.metricValue}>${tourSummary.averagePerPerson}</Text>
           <Text style={styles.metricLabel}>Per Person</Text>
         </Card>
         
@@ -360,12 +360,12 @@ const renderBalancesTab = () => {
           <View style={styles.balanceDetails}>
             <View style={styles.balanceRow}>
               <Text style={styles.balanceLabel}>Total Paid:</Text>
-              <Text style={styles.balanceAmount}>₹{summary.totalPaid}</Text>
+              <Text style={styles.balanceAmount}>${summary.totalPaid}</Text>
             </View>
             
             <View style={styles.balanceRow}>
               <Text style={styles.balanceLabel}>Fair Share:</Text>
-              <Text style={styles.balanceAmount}>₹{summary.totalShare.toFixed(2)}</Text>
+              <Text style={styles.balanceAmount}>${summary.totalShare.toFixed(2)}</Text>
             </View>
             
             <View style={styles.balanceRow}>
@@ -374,7 +374,7 @@ const renderBalancesTab = () => {
                 styles.balanceAmount, 
                 summary.balance > 0 ? styles.positiveBalance : styles.negativeBalance
               ]}>
-                {summary.balance > 0 ? '+' : ''}₹{summary.balance.toFixed(2)}
+                {summary.balance > 0 ? '+' : ''}${summary.balance.toFixed(2)}
               </Text>
             </View>
             
@@ -425,7 +425,7 @@ const renderSettlementsTab = () => {
         <Card key={`${settlement.from.id}-${settlement.to.id}`} style={styles.settlementCard}>
           <View style={styles.settlementHeader}>
             <Text style={styles.stepNumber}>{index + 1}</Text>
-            <Text style={styles.settlementAmount}>₹{settlement.amount}</Text>
+            <Text style={styles.settlementAmount}>${settlement.amount}</Text>
           </View>
           
           <View style={styles.settlementParties}>
@@ -467,49 +467,49 @@ const renderSettlementsTab = () => {
 Let's walk through a complete example:
 
 ### Tour Setup
-**"Goa Beach Trip"** - 4 participants:
+**"Cox's Bazar Beach Trip"** - 4 participants:
 - Alice, Bob, Charlie, David
 
 ### Expenses Added
-1. **Hotel**: ₹2400 (paid by Alice, split among all 4)
-2. **Dinner**: ₹800 (paid by Bob, split among all 4)  
-3. **Breakfast**: ₹400 (paid by Charlie, split among Alice, Bob, Charlie)
-4. **Taxi**: ₹300 (paid by David, split between Bob and David)
+1. **Hotel**: $2400 (paid by Alice, split among all 4)
+2. **Dinner**: $800 (paid by Bob, split among all 4)  
+3. **Breakfast**: $400 (paid by Charlie, split among Alice, Bob, Charlie)
+4. **Taxi**: $300 (paid by David, split between Bob and David)
 
 ### Calculations
 
-**1. Total Expenses:** ₹2400 + ₹800 + ₹400 + ₹300 = ₹3900
+**1. Total Expenses:** $2400 + $800 + $400 + $300 = $3900
 
 **2. Participant Summaries:**
 
 **Alice:**
-- Total Paid: ₹2400 (hotel)
-- Fair Share: ₹2400÷4 + ₹800÷4 + ₹400÷3 + ₹0 = ₹600 + ₹200 + ₹133 = ₹933
-- Balance: ₹2400 - ₹933 = +₹1467 (Alice is owed ₹1467)
+- Total Paid: $2400 (hotel)
+- Fair Share: $2400÷4 + $800÷4 + $400÷3 + $0 = $600 + $200 + $133 = $933
+- Balance: $2400 - $933 = +$1467 (Alice is owed $1467)
 
 **Bob:**
-- Total Paid: ₹800 (dinner)
-- Fair Share: ₹2400÷4 + ₹800÷4 + ₹400÷3 + ₹300÷2 = ₹600 + ₹200 + ₹133 + ₹150 = ₹1083
-- Balance: ₹800 - ₹1083 = -₹283 (Bob owes ₹283)
+- Total Paid: $800 (dinner)
+- Fair Share: $2400÷4 + $800÷4 + $400÷3 + $300÷2 = $600 + $200 + $133 + $150 = $1083
+- Balance: $800 - $1083 = -$283 (Bob owes $283)
 
 **Charlie:**
-- Total Paid: ₹400 (breakfast)
-- Fair Share: ₹2400÷4 + ₹800÷4 + ₹400÷3 + ₹0 = ₹600 + ₹200 + ₹133 = ₹933
-- Balance: ₹400 - ₹933 = -₹533 (Charlie owes ₹533)
+- Total Paid: $400 (breakfast)
+- Fair Share: $2400÷4 + $800÷4 + $400÷3 + $0 = $600 + $200 + $133 = $933
+- Balance: $400 - $933 = -$533 (Charlie owes $533)
 
 **David:**
-- Total Paid: ₹300 (taxi)
-- Fair Share: ₹2400÷4 + ₹800÷4 + ₹0 + ₹300÷2 = ₹600 + ₹200 + ₹150 = ₹950
-- Balance: ₹300 - ₹950 = -₹650 (David owes ₹650)
+- Total Paid: $300 (taxi)
+- Fair Share: $2400÷4 + $800÷4 + $0 + $300÷2 = $600 + $200 + $150 = $950
+- Balance: $300 - $950 = -$650 (David owes $650)
 
 **3. Settlement Algorithm:**
-- **Creditors:** Alice (+₹1467)
-- **Debtors:** David (-₹650), Charlie (-₹533), Bob (-₹283)
+- **Creditors:** Alice (+$1467)
+- **Debtors:** David (-$650), Charlie (-$533), Bob (-$283)
 
 **Optimal Settlements:**
-1. David pays ₹650 to Alice (Alice now owed ₹817, David settled)
-2. Charlie pays ₹533 to Alice (Alice now owed ₹284, Charlie settled)
-3. Bob pays ₹283 to Alice (Everyone settled)
+1. David pays $650 to Alice (Alice now owed $817, David settled)
+2. Charlie pays $533 to Alice (Alice now owed $284, Charlie settled)
+3. Bob pays $283 to Alice (Everyone settled)
 
 **Result:** 3 transactions settle everything!
 

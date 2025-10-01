@@ -24,7 +24,7 @@ This guide explains the complete data modeling strategy in TourExpense. Learn ho
 ```typescript
 interface Tour {
   id: string;                    // Unique identifier (UUID)
-  title: string;                 // "Goa Beach Trip 2024"
+  title: string;                 // "Cox's Bazar Beach Trip 2024"
   description?: string;          // Optional detailed description
   startDate: string;            // ISO date string "2024-01-15"
   endDate?: string;             // Optional end date
@@ -211,13 +211,13 @@ interface Expense {
 ```typescript
 // Storage format
 const expense: Expense = {
-  amount: 250000, // ₹2500.00 stored as 250000 paisa
+  amount: 250000, // $2500.00 stored as 250000 paisa
   // ...
 };
 
 // Display format  
 const displayAmount = (amount: number) => {
-  return `₹${(amount / 100).toFixed(2)}`;
+  return `$${(amount / 100).toFixed(2)}`;
 };
 ```
 
@@ -372,8 +372,8 @@ interface Settlement {
 {
   from: { id: '2', name: 'Bob', /* ... */ },
   to: { id: '1', name: 'Alice', /* ... */ },
-  amount: 50000, // ₹500.00 in paisa
-  description: "Bob pays ₹500.00 to Alice"
+  amount: 50000, // $500.00 in paisa
+  description: "Bob pays $500.00 to Alice"
 }
 ```
 
@@ -430,7 +430,7 @@ export const validateExpense = (data: any): data is Expense => {
 ```typescript
 // Convert stored data to display format
 export const formatCurrency = (amount: number): string => {
-  return `₹${(amount / 100).toLocaleString('en-IN', {
+  return `$${(amount / 100).toLocaleString('en-IN', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   })}`;
@@ -438,7 +438,7 @@ export const formatCurrency = (amount: number): string => {
 
 // Convert user input to storage format
 export const parseCurrency = (input: string): number => {
-  const cleaned = input.replace(/[₹,\s]/g, '');
+  const cleaned = input.replace(/[$,\s]/g, '');
   const parsed = parseFloat(cleaned);
   return isNaN(parsed) ? 0 : Math.round(parsed * 100);
 };
@@ -684,7 +684,7 @@ export const createMockExpenses = (
   return Array.from({ length: count }, (_, index) => ({
     id: uuidv4(),
     title: titles[index % titles.length],
-    amount: Math.floor(Math.random() * 500000) + 10000, // ₹100 - ₹5000
+    amount: Math.floor(Math.random() * 500000) + 10000, // $100 - $5000
     category: categories[index % categories.length],
     paidBy: participants[index % participants.length].id,
     participants: participants.slice(0, Math.floor(Math.random() * participants.length) + 1).map(p => p.id),
@@ -713,12 +713,12 @@ describe('Data Models', () => {
   
   describe('Currency formatting', () => {
     test('formats currency correctly', () => {
-      expect(formatCurrency(250000)).toBe('₹2,500.00');
-      expect(formatCurrency(150)).toBe('₹1.50');
+      expect(formatCurrency(250000)).toBe('$2,500.00');
+      expect(formatCurrency(150)).toBe('$1.50');
     });
     
     test('parses currency input', () => {
-      expect(parseCurrency('₹2,500.00')).toBe(250000);
+      expect(parseCurrency('$2,500.00')).toBe(250000);
       expect(parseCurrency('1.50')).toBe(150);
     });
   });

@@ -7,7 +7,11 @@ import {
   Alert,
   Text,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  RouteProp as NavigationRouteProp,
+} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
@@ -85,7 +89,7 @@ const EditTourScreen: React.FC = () => {
       };
 
       dispatch({ type: 'UPDATE_TOUR', payload: updatedTour });
-      
+
       Alert.alert('Success', 'Tour updated successfully!', [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
@@ -104,14 +108,12 @@ const EditTourScreen: React.FC = () => {
       >
         <Card>
           <Text style={styles.sectionTitle}>Tour Information</Text>
-          
+
           <Input
             label="Tour Title *"
-            placeholder="e.g. Goa Trip 2024"
+            placeholder="e.g. Cox's Bazar Trip 2024"
             value={formData.title}
-            onChangeText={(text) =>
-              setFormData({ ...formData, title: text })
-            }
+            onChangeText={text => setFormData({ ...formData, title: text })}
             error={errors.title}
           />
 
@@ -119,7 +121,7 @@ const EditTourScreen: React.FC = () => {
             label="Description"
             placeholder="Brief description of the tour"
             value={formData.description}
-            onChangeText={(text) =>
+            onChangeText={text =>
               setFormData({ ...formData, description: text })
             }
             multiline
@@ -131,9 +133,7 @@ const EditTourScreen: React.FC = () => {
             label="Start Date *"
             placeholder="YYYY-MM-DD"
             value={formData.startDate}
-            onChangeText={(text) =>
-              setFormData({ ...formData, startDate: text })
-            }
+            onChangeText={text => setFormData({ ...formData, startDate: text })}
             error={errors.startDate}
           />
 
@@ -141,9 +141,7 @@ const EditTourScreen: React.FC = () => {
             label="End Date"
             placeholder="YYYY-MM-DD (optional)"
             value={formData.endDate}
-            onChangeText={(text) =>
-              setFormData({ ...formData, endDate: text })
-            }
+            onChangeText={text => setFormData({ ...formData, endDate: text })}
             error={errors.endDate}
           />
         </Card>

@@ -231,7 +231,7 @@ const AddExpenseScreen: React.FC = () => {
         />
 
         <Input
-          label="Amount (₹) *"
+          label="Amount ($) *"
           placeholder="0.00"
           value={formData.amount}
           onChangeText={(text) => setFormData({ ...formData, amount: text })}
@@ -417,7 +417,7 @@ const ParticipantSelector: React.FC<{
         <View style={styles.splitPreview}>
           <Text style={styles.splitText}>
             Split between {selected.length} people
-            {formData.amount && ` · ₹${(parseFloat(formData.amount) / selected.length).toFixed(2)} per person`}
+            {formData.amount && ` · $${(parseFloat(formData.amount) / selected.length).toFixed(2)} per person`}
           </Text>
         </View>
       )}

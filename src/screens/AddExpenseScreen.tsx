@@ -8,7 +8,11 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  RouteProp as NavigationRouteProp,
+} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { useApp } from '../context/AppContext';
@@ -18,9 +22,17 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import Avatar from '../components/Avatar';
 import { generateId } from '../utils/calculations';
-import { Expense, EXPENSE_CATEGORIES, CATEGORY_ICONS, CATEGORY_COLORS } from '../types';
+import {
+  Expense,
+  EXPENSE_CATEGORIES,
+  CATEGORY_ICONS,
+  CATEGORY_COLORS,
+} from '../types';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'AddExpense'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'AddExpense'
+>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'AddExpense'>;
 
 const AddExpenseScreen: React.FC = () => {
@@ -112,31 +124,27 @@ const AddExpenseScreen: React.FC = () => {
         payload: { tourId, expense: newExpense },
       });
 
-      Alert.alert(
-        'Success',
-        'Expense added successfully!',
-        [
-          {
-            text: 'Add Another',
-            onPress: () => {
-              setFormData({
-                title: '',
-                amount: '',
-                description: '',
-                paidBy: '',
-                participants: [],
-                category: EXPENSE_CATEGORIES[0],
-              });
-              setErrors({});
-            },
+      Alert.alert('Success', 'Expense added successfully!', [
+        {
+          text: 'Add Another',
+          onPress: () => {
+            setFormData({
+              title: '',
+              amount: '',
+              description: '',
+              paidBy: '',
+              participants: [],
+              category: EXPENSE_CATEGORIES[0],
+            });
+            setErrors({});
           },
-          {
-            text: 'View Tour',
-            onPress: () => navigation.goBack(),
-            style: 'default',
-          },
-        ]
-      );
+        },
+        {
+          text: 'View Tour',
+          onPress: () => navigation.goBack(),
+          style: 'default',
+        },
+      ]);
     } catch (error) {
       Alert.alert('Error', 'Failed to add expense. Please try again.');
     } finally {
@@ -174,24 +182,20 @@ const AddExpenseScreen: React.FC = () => {
       >
         <Card>
           <Text style={styles.sectionTitle}>Expense Details</Text>
-          
+
           <Input
             label="Expense Title *"
             placeholder="e.g. Lunch at Restaurant"
             value={formData.title}
-            onChangeText={(text) =>
-              setFormData({ ...formData, title: text })
-            }
+            onChangeText={text => setFormData({ ...formData, title: text })}
             error={errors.title}
           />
 
           <Input
-            label="Amount (₹) *"
+            label="Amount ($) *"
             placeholder="0.00"
             value={formData.amount}
-            onChangeText={(text) =>
-              setFormData({ ...formData, amount: text })
-            }
+            onChangeText={text => setFormData({ ...formData, amount: text })}
             keyboardType="numeric"
             error={errors.amount}
           />
@@ -200,7 +204,7 @@ const AddExpenseScreen: React.FC = () => {
             label="Description"
             placeholder="Additional notes (optional)"
             value={formData.description}
-            onChangeText={(text) =>
+            onChangeText={text =>
               setFormData({ ...formData, description: text })
             }
             multiline
@@ -212,12 +216,12 @@ const AddExpenseScreen: React.FC = () => {
         <Card>
           <Text style={styles.sectionTitle}>Category</Text>
           <View style={styles.categoryGrid}>
-            {EXPENSE_CATEGORIES.map((category) => (
+            {EXPENSE_CATEGORIES.map(category => (
               <TouchableOpacity
                 key={category}
                 style={[
                   styles.categoryItem,
-                  formData.category === category 
+                  formData.category === category
                     ? { backgroundColor: CATEGORY_COLORS[category] }
                     : styles.unselectedCategory,
                 ]}
@@ -229,7 +233,9 @@ const AddExpenseScreen: React.FC = () => {
                 <Text
                   style={[
                     styles.categoryText,
-                    formData.category === category ? styles.selectedCategoryText : styles.unselectedCategoryText
+                    formData.category === category
+                      ? styles.selectedCategoryText
+                      : styles.unselectedCategoryText,
                   ]}
                 >
                   {category}
@@ -243,14 +249,16 @@ const AddExpenseScreen: React.FC = () => {
           <Text style={styles.sectionTitle}>Who Paid? *</Text>
           {errors.paidBy && <Text style={styles.error}>{errors.paidBy}</Text>}
           <View style={styles.participantsGrid}>
-            {tour.participants.map((participant) => (
+            {tour.participants.map(participant => (
               <TouchableOpacity
                 key={participant.id}
                 style={[
                   styles.payerItem,
                   formData.paidBy === participant.id && styles.selectedPayer,
                 ]}
-                onPress={() => setFormData({ ...formData, paidBy: participant.id })}
+                onPress={() =>
+                  setFormData({ ...formData, paidBy: participant.id })
+                }
               >
                 <Avatar
                   name={participant.name}
@@ -272,14 +280,17 @@ const AddExpenseScreen: React.FC = () => {
               <Text style={styles.selectAllText}>Select All</Text>
             </TouchableOpacity>
           </View>
-          {errors.participants && <Text style={styles.error}>{errors.participants}</Text>}
+          {errors.participants && (
+            <Text style={styles.error}>{errors.participants}</Text>
+          )}
           <View style={styles.participantsGrid}>
-            {tour.participants.map((participant) => (
+            {tour.participants.map(participant => (
               <TouchableOpacity
                 key={participant.id}
                 style={[
                   styles.participantItem,
-                  formData.participants.includes(participant.id) && styles.selectedParticipant,
+                  formData.participants.includes(participant.id) &&
+                    styles.selectedParticipant,
                 ]}
                 onPress={() => toggleParticipant(participant.id)}
               >

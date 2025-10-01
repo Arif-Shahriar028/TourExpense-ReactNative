@@ -7,7 +7,10 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import { useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
+import {
+  useRoute,
+  RouteProp as NavigationRouteProp,
+} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useApp } from '../context/AppContext';
@@ -15,7 +18,12 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import Card from '../components/Card';
 import Avatar from '../components/Avatar';
 import { formatCurrency, formatDate } from '../utils/calculations';
-import { CATEGORY_COLORS, CATEGORY_ICONS, ExpenseCategorySummary, ParticipantSummary } from '../types';
+import {
+  CATEGORY_COLORS,
+  CATEGORY_ICONS,
+  ExpenseCategorySummary,
+  ParticipantSummary,
+} from '../types';
 
 type RouteProps = NavigationRouteProp<RootStackParamList, 'ExpenseSummary'>;
 
@@ -24,6 +32,8 @@ type TabType = 'overview' | 'expenses' | 'balances' | 'settlements';
 const ExpenseSummaryScreen: React.FC = () => {
   const { tours, getTourSummary, getSettlements } = useApp();
   const route = useRoute<RouteProps>();
+
+  console.log('----->>>> route params: ', JSON.stringify(route));
 
   const { tourId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -43,23 +53,15 @@ const ExpenseSummaryScreen: React.FC = () => {
   const renderTabButton = (tab: TabType, label: string, icon: string) => (
     <TouchableOpacity
       key={tab}
-      style={[
-        styles.tabButton,
-        activeTab === tab && styles.activeTabButton,
-      ]}
+      style={[styles.tabButton, activeTab === tab && styles.activeTabButton]}
       onPress={() => setActiveTab(tab)}
     >
-      <Icon 
-        name={icon} 
-        size={16} 
-        color={activeTab === tab ? '#007AFF' : '#666'} 
+      <Icon
+        name={icon}
+        size={16}
+        color={activeTab === tab ? '#007AFF' : '#666'}
       />
-      <Text
-        style={[
-          styles.tabText,
-          activeTab === tab && styles.activeTabText,
-        ]}
-      >
+      <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>
         {label}
       </Text>
     </TouchableOpacity>
@@ -71,7 +73,9 @@ const ExpenseSummaryScreen: React.FC = () => {
         <Text style={styles.sectionTitle}>Tour Summary</Text>
         <View style={styles.summaryStats}>
           <View style={styles.statItem}>
-            <Text style={styles.statValue}>{formatCurrency(summary.totalExpenses)}</Text>
+            <Text style={styles.statValue}>
+              {formatCurrency(summary.totalExpenses)}
+            </Text>
             <Text style={styles.statLabel}>Total Expenses</Text>
           </View>
           <View style={styles.statItem}>
@@ -89,58 +93,69 @@ const ExpenseSummaryScreen: React.FC = () => {
 
       <Card>
         <Text style={styles.sectionTitle}>Expenses by Category</Text>
-        {summary.expensesByCategory.map((categoryData: ExpenseCategorySummary) => (
-          <View key={categoryData.category} style={styles.categoryItem}>
-            <View style={styles.categoryLeft}>
-              <View
-                style={[
-                  styles.categoryIcon,
-                  { backgroundColor: CATEGORY_COLORS[categoryData.category] },
-                ]}
-              >
-                <Text style={styles.categoryIconText}>
-                  {CATEGORY_ICONS[categoryData.category]}
-                </Text>
+        {summary.expensesByCategory.map(
+          (categoryData: ExpenseCategorySummary) => (
+            <View key={categoryData.category} style={styles.categoryItem}>
+              <View style={styles.categoryLeft}>
+                <View
+                  style={[
+                    styles.categoryIcon,
+                    { backgroundColor: CATEGORY_COLORS[categoryData.category] },
+                  ]}
+                >
+                  <Text style={styles.categoryIconText}>
+                    {CATEGORY_ICONS[categoryData.category]}
+                  </Text>
+                </View>
+                <View>
+                  <Text style={styles.categoryName}>
+                    {categoryData.category}
+                  </Text>
+                  <Text style={styles.categoryCount}>
+                    {categoryData.expenseCount} expenses
+                  </Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.categoryName}>{categoryData.category}</Text>
-                <Text style={styles.categoryCount}>
-                  {categoryData.expenseCount} expenses
-                </Text>
-              </View>
+              <Text style={styles.categoryAmount}>
+                {formatCurrency(categoryData.totalAmount)}
+              </Text>
             </View>
-            <Text style={styles.categoryAmount}>
-              {formatCurrency(categoryData.totalAmount)}
-            </Text>
-          </View>
-        ))}
+          ),
+        )}
       </Card>
 
       <Card>
         <Text style={styles.sectionTitle}>Quick Balances</Text>
-        {summary.participantSummaries.slice(0, 3).map((participantSummary: ParticipantSummary) => (
-          <View key={participantSummary.participant.id} style={styles.participantBalance}>
-            <View style={styles.participantInfo}>
-              <Avatar
-                name={participantSummary.participant.name}
-                color={participantSummary.participant.color}
-                size={32}
-              />
-              <Text style={styles.participantName}>
-                {participantSummary.participant.name}
+        {summary.participantSummaries
+          .slice(0, 3)
+          .map((participantSummary: ParticipantSummary) => (
+            <View
+              key={participantSummary.participant.id}
+              style={styles.participantBalance}
+            >
+              <View style={styles.participantInfo}>
+                <Avatar
+                  name={participantSummary.participant.name}
+                  color={participantSummary.participant.color}
+                  size={32}
+                />
+                <Text style={styles.participantName}>
+                  {participantSummary.participant.name}
+                </Text>
+              </View>
+              <Text
+                style={[
+                  styles.balanceAmount,
+                  participantSummary.netBalance >= 0
+                    ? styles.positiveBalance
+                    : styles.negativeBalance,
+                ]}
+              >
+                {participantSummary.netBalance >= 0 ? '+' : ''}
+                {formatCurrency(participantSummary.netBalance)}
               </Text>
             </View>
-            <Text
-              style={[
-                styles.balanceAmount,
-                participantSummary.netBalance >= 0 ? styles.positiveBalance : styles.negativeBalance,
-              ]}
-            >
-              {participantSummary.netBalance >= 0 ? '+' : ''}
-              {formatCurrency(participantSummary.netBalance)}
-            </Text>
-          </View>
-        ))}
+          ))}
         {summary.participantSummaries.length > 3 && (
           <TouchableOpacity
             style={styles.viewAllButton}
@@ -160,7 +175,7 @@ const ExpenseSummaryScreen: React.FC = () => {
           <Text style={styles.emptyText}>No expenses yet</Text>
         </Card>
       ) : (
-        tour.expenses.map((expense) => {
+        tour.expenses.map(expense => {
           const payer = tour.participants.find(p => p.id === expense.paidBy);
           return (
             <Card key={expense.id}>
@@ -187,16 +202,18 @@ const ExpenseSummaryScreen: React.FC = () => {
                   {formatCurrency(expense.amount)}
                 </Text>
               </View>
-              
+
               <Text style={styles.expensePayer}>
                 Paid by: {payer?.name || 'Unknown'}
               </Text>
-              
+
               <View style={styles.expenseParticipants}>
                 <Text style={styles.participantsLabel}>Participants:</Text>
                 <View style={styles.participantAvatars}>
-                  {expense.participants.map((participantId) => {
-                    const participant = tour.participants.find(p => p.id === participantId);
+                  {expense.participants.map(participantId => {
+                    const participant = tour.participants.find(
+                      p => p.id === participantId,
+                    );
                     return participant ? (
                       <Avatar
                         key={participantId}
@@ -208,9 +225,10 @@ const ExpenseSummaryScreen: React.FC = () => {
                   })}
                 </View>
               </View>
-              
+
               <Text style={styles.shareAmount}>
-                Share per person: {formatCurrency(expense.amount / expense.participants.length)}
+                Share per person:{' '}
+                {formatCurrency(expense.amount / expense.participants.length)}
               </Text>
             </Card>
           );
@@ -223,47 +241,54 @@ const ExpenseSummaryScreen: React.FC = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <Card>
         <Text style={styles.sectionTitle}>Individual Balances</Text>
-        {summary.participantSummaries.map((participantSummary: ParticipantSummary) => (
-          <View key={participantSummary.participant.id} style={styles.detailedBalance}>
-            <View style={styles.participantInfo}>
-              <Avatar
-                name={participantSummary.participant.name}
-                color={participantSummary.participant.color}
-                size={40}
-              />
-              <Text style={styles.participantName}>
-                {participantSummary.participant.name}
-              </Text>
+        {summary.participantSummaries.map(
+          (participantSummary: ParticipantSummary) => (
+            <View
+              key={participantSummary.participant.id}
+              style={styles.detailedBalance}
+            >
+              <View style={styles.participantInfo}>
+                <Avatar
+                  name={participantSummary.participant.name}
+                  color={participantSummary.participant.color}
+                  size={40}
+                />
+                <Text style={styles.participantName}>
+                  {participantSummary.participant.name}
+                </Text>
+              </View>
+
+              <View style={styles.balanceDetails}>
+                <View style={styles.balanceRow}>
+                  <Text style={styles.balanceLabel}>Paid:</Text>
+                  <Text style={styles.balanceValue}>
+                    {formatCurrency(participantSummary.totalPaid)}
+                  </Text>
+                </View>
+                <View style={styles.balanceRow}>
+                  <Text style={styles.balanceLabel}>Owes:</Text>
+                  <Text style={styles.balanceValue}>
+                    {formatCurrency(participantSummary.totalOwed)}
+                  </Text>
+                </View>
+                <View style={[styles.balanceRow, styles.netBalanceRow]}>
+                  <Text style={styles.netBalanceLabel}>Net:</Text>
+                  <Text
+                    style={[
+                      styles.netBalanceValue,
+                      participantSummary.netBalance >= 0
+                        ? styles.positiveBalance
+                        : styles.negativeBalance,
+                    ]}
+                  >
+                    {participantSummary.netBalance >= 0 ? '+' : ''}
+                    {formatCurrency(participantSummary.netBalance)}
+                  </Text>
+                </View>
+              </View>
             </View>
-            
-            <View style={styles.balanceDetails}>
-              <View style={styles.balanceRow}>
-                <Text style={styles.balanceLabel}>Paid:</Text>
-                <Text style={styles.balanceValue}>
-                  {formatCurrency(participantSummary.totalPaid)}
-                </Text>
-              </View>
-              <View style={styles.balanceRow}>
-                <Text style={styles.balanceLabel}>Owes:</Text>
-                <Text style={styles.balanceValue}>
-                  {formatCurrency(participantSummary.totalOwed)}
-                </Text>
-              </View>
-              <View style={[styles.balanceRow, styles.netBalanceRow]}>
-                <Text style={styles.netBalanceLabel}>Net:</Text>
-                <Text
-                  style={[
-                    styles.netBalanceValue,
-                    participantSummary.netBalance >= 0 ? styles.positiveBalance : styles.negativeBalance,
-                  ]}
-                >
-                  {participantSummary.netBalance >= 0 ? '+' : ''}
-                  {formatCurrency(participantSummary.netBalance)}
-                </Text>
-              </View>
-            </View>
-          </View>
-        ))}
+          ),
+        )}
       </Card>
     </ScrollView>
   );
@@ -280,9 +305,13 @@ const ExpenseSummaryScreen: React.FC = () => {
               To settle all debts, the following transfers are recommended:
             </Text>
             {settlements.map((settlement, index) => {
-              const fromParticipant = tour.participants.find(p => p.id === settlement.from);
-              const toParticipant = tour.participants.find(p => p.id === settlement.to);
-              
+              const fromParticipant = tour.participants.find(
+                p => p.id === settlement.from,
+              );
+              const toParticipant = tour.participants.find(
+                p => p.id === settlement.to,
+              );
+
               return (
                 <View key={index} style={styles.settlementItem}>
                   <View style={styles.settlementParticipants}>
@@ -296,14 +325,14 @@ const ExpenseSummaryScreen: React.FC = () => {
                         {fromParticipant?.name || 'Unknown'}
                       </Text>
                     </View>
-                    
+
                     <View style={styles.settlementArrow}>
                       <Icon name="arrow-forward" size={20} color="#007AFF" />
                       <Text style={styles.settlementAmount}>
                         {formatCurrency(settlement.amount)}
                       </Text>
                     </View>
-                    
+
                     <View style={styles.settlementParticipant}>
                       <Avatar
                         name={toParticipant?.name || 'Unknown'}
@@ -353,9 +382,7 @@ const ExpenseSummaryScreen: React.FC = () => {
         {renderTabButton('settlements', 'Settlements', 'swap-horiz')}
       </View>
 
-      <View style={styles.tabContent}>
-        {renderTabContent()}
-      </View>
+      <View style={styles.tabContent}>{renderTabContent()}</View>
     </SafeAreaView>
   );
 };

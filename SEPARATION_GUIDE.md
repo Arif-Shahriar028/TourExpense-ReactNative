@@ -314,7 +314,7 @@ export const analyticsPlugin: AnalyticsPlugin = {
       },
       {
         type: 'savings',
-        title: 'You could save ₹500 per trip by booking accommodation earlier',
+        title: 'You could save $500 per trip by booking accommodation earlier',
         recommendation: 'Set up booking reminders 30 days before trips',
       },
     ];
