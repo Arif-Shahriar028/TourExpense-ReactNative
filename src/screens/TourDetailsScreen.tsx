@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  Alert,
 } from 'react-native';
 import {
   useNavigation,
@@ -20,6 +19,7 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Avatar from '../components/Avatar';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 import { formatDate, formatCurrency } from '../utils/calculations';
 import { CATEGORY_ICONS, CATEGORY_COLORS } from '../types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -34,6 +34,7 @@ const TourDetailsScreen: React.FC = () => {
   const { tours, dispatch, getTourSummary } = useApp();
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
+  const { showDestructiveAlert } = useAlertHelpers();
 
   const { tourId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -48,20 +49,13 @@ const TourDetailsScreen: React.FC = () => {
   }
 
   const handleDeleteTour = () => {
-    Alert.alert(
+    showDestructiveAlert(
       'Delete Tour',
       'Are you sure you want to delete this tour? This action cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            dispatch({ type: 'DELETE_TOUR', payload: tourId });
-            navigation.goBack();
-          },
-        },
-      ],
+      () => {
+        dispatch({ type: 'DELETE_TOUR', payload: tourId });
+        navigation.goBack();
+      }
     );
   };
 

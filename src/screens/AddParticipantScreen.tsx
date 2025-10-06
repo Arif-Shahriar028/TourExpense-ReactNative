@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Alert,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -17,6 +16,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Avatar from '../components/Avatar';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 import { generateId, generateParticipantColor } from '../utils/calculations';
 import { Participant } from '../types';
 
@@ -27,6 +27,7 @@ const AddParticipantScreen: React.FC = () => {
   const { tours, dispatch } = useApp();
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
+  const { showCustomAlert, showErrorAlert } = useAlertHelpers();
 
   const { tourId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -80,7 +81,7 @@ const AddParticipantScreen: React.FC = () => {
         payload: { tourId, participant: newParticipant },
       });
 
-      Alert.alert(
+      showCustomAlert(
         'Success',
         `${newParticipant.name} has been added to the tour!`,
         [
@@ -99,7 +100,7 @@ const AddParticipantScreen: React.FC = () => {
         ]
       );
     } catch (error) {
-      Alert.alert('Error', 'Failed to add participant. Please try again.');
+      showErrorAlert('Error', 'Failed to add participant. Please try again.');
     } finally {
       setLoading(false);
     }

@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Alert,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -21,6 +20,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Avatar from '../components/Avatar';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 import { generateId } from '../utils/calculations';
 import {
   Expense,
@@ -39,6 +39,7 @@ const AddExpenseScreen: React.FC = () => {
   const { tours, dispatch } = useApp();
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
+  const { showCustomAlert, showErrorAlert } = useAlertHelpers();
 
   const { tourId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -124,29 +125,33 @@ const AddExpenseScreen: React.FC = () => {
         payload: { tourId, expense: newExpense },
       });
 
-      Alert.alert('Success', 'Expense added successfully!', [
-        {
-          text: 'Add Another',
-          onPress: () => {
-            setFormData({
-              title: '',
-              amount: '',
-              description: '',
-              paidBy: '',
-              participants: [],
-              category: EXPENSE_CATEGORIES[0],
-            });
-            setErrors({});
+      showCustomAlert(
+        'Success',
+        'Expense added successfully!',
+        [
+          {
+            text: 'Add Another',
+            onPress: () => {
+              setFormData({
+                title: '',
+                amount: '',
+                description: '',
+                paidBy: '',
+                participants: [],
+                category: EXPENSE_CATEGORIES[0],
+              });
+              setErrors({});
+            },
           },
-        },
-        {
-          text: 'View Tour',
-          onPress: () => navigation.goBack(),
-          style: 'default',
-        },
-      ]);
+          {
+            text: 'View Tour',
+            onPress: () => navigation.goBack(),
+            style: 'default',
+          },
+        ]
+      );
     } catch (error) {
-      Alert.alert('Error', 'Failed to add expense. Please try again.');
+      showErrorAlert('Error', 'Failed to add expense. Please try again.');
     } finally {
       setLoading(false);
     }

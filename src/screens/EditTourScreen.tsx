@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Alert,
   Text,
 } from 'react-native';
 import {
@@ -19,6 +18,7 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'EditTour'>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'EditTour'>;
@@ -27,6 +27,7 @@ const EditTourScreen: React.FC = () => {
   const { tours, dispatch } = useApp();
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
+  const { showSuccessAlert, showErrorAlert } = useAlertHelpers();
 
   const { tourId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -90,11 +91,11 @@ const EditTourScreen: React.FC = () => {
 
       dispatch({ type: 'UPDATE_TOUR', payload: updatedTour });
 
-      Alert.alert('Success', 'Tour updated successfully!', [
+      showSuccessAlert('Success', 'Tour updated successfully!', [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (error) {
-      Alert.alert('Error', 'Failed to update tour. Please try again.');
+      showErrorAlert('Error', 'Failed to update tour. Please try again.');
     } finally {
       setLoading(false);
     }

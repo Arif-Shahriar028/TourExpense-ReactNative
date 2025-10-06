@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Alert,
   Text,
   TouchableOpacity,
 } from 'react-native';
@@ -21,6 +20,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Avatar from '../components/Avatar';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 import { EXPENSE_CATEGORIES, CATEGORY_ICONS, CATEGORY_COLORS } from '../types';
 
 type NavigationProp = NativeStackNavigationProp<
@@ -33,6 +33,7 @@ const EditExpenseScreen: React.FC = () => {
   const { tours, dispatch } = useApp();
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
+  const { showSuccessAlert, showErrorAlert, showDestructiveAlert } = useAlertHelpers();
 
   const { tourId, expenseId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -113,34 +114,27 @@ const EditExpenseScreen: React.FC = () => {
         payload: { tourId, expense: updatedExpense },
       });
 
-      Alert.alert('Success', 'Expense updated successfully!', [
+      showSuccessAlert('Success', 'Expense updated successfully!', [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (error) {
-      Alert.alert('Error', 'Failed to update expense. Please try again.');
+      showErrorAlert('Error', 'Failed to update expense. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = () => {
-    Alert.alert(
+    showDestructiveAlert(
       'Delete Expense',
       'Are you sure you want to delete this expense?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => {
-            dispatch({
-              type: 'DELETE_EXPENSE',
-              payload: { tourId, expenseId },
-            });
-            navigation.goBack();
-          },
-        },
-      ],
+      () => {
+        dispatch({
+          type: 'DELETE_EXPENSE',
+          payload: { tourId, expenseId },
+        });
+        navigation.goBack();
+      }
     );
   };
 

@@ -6,9 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  Alert,
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp as NavigationRouteProp } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  RouteProp as NavigationRouteProp,
+} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -17,15 +20,20 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Avatar from '../components/Avatar';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 import { Participant } from '../types';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Participants'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Participants'
+>;
 type RouteProps = NavigationRouteProp<RootStackParamList, 'Participants'>;
 
 const ParticipantsScreen: React.FC = () => {
   const { tours, dispatch } = useApp();
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
+  const { showDestructiveAlert } = useAlertHelpers();
 
   const { tourId } = route.params;
   const tour = tours.find(t => t.id === tourId);
@@ -42,22 +50,15 @@ const ParticipantsScreen: React.FC = () => {
     const participant = tour.participants.find(p => p.id === participantId);
     if (!participant) return;
 
-    Alert.alert(
+    showDestructiveAlert(
       'Remove Participant',
       `Are you sure you want to remove ${participant.name} from this tour? All expenses involving this participant will also be removed.`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Remove',
-          style: 'destructive',
-          onPress: () => {
-            dispatch({
-              type: 'DELETE_PARTICIPANT',
-              payload: { tourId, participantId },
-            });
-          },
-        },
-      ]
+      () => {
+        dispatch({
+          type: 'DELETE_PARTICIPANT',
+          payload: { tourId, participantId },
+        });
+      }
     );
   };
 
@@ -67,7 +68,7 @@ const ParticipantsScreen: React.FC = () => {
         <Avatar name={item.name} color={item.color} size={50} />
         <View style={styles.participantDetails}>
           <Text style={styles.participantName}>{item.name}</Text>
-          <Text style={styles.participantId}>ID: {item.id.slice(-8)}</Text>
+          {/* <Text style={styles.participantId}>ID: {item.id.slice(-8)}</Text> */}
         </View>
         <TouchableOpacity
           style={styles.deleteButton}
@@ -112,7 +113,7 @@ const ParticipantsScreen: React.FC = () => {
       <FlatList
         data={tour.participants}
         renderItem={renderParticipantItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={renderEmptyState}
         showsVerticalScrollIndicator={false}

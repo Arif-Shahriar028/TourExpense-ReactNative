@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  SafeAreaView,
-  Alert,
-  Text,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, SafeAreaView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -15,6 +8,7 @@ import { RootStackParamList } from '../navigation/AppNavigator';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import { useAlertHelpers } from '../hooks/useAlertHelpers';
 import { generateId } from '../utils/calculations';
 import { Tour } from '../types';
 
@@ -26,6 +20,7 @@ type NavigationProp = NativeStackNavigationProp<
 const CreateTourScreen: React.FC = () => {
   const { dispatch } = useApp();
   const navigation = useNavigation<NavigationProp>();
+  const { showCustomAlert, showErrorAlert } = useAlertHelpers();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -70,7 +65,7 @@ const CreateTourScreen: React.FC = () => {
 
       dispatch({ type: 'ADD_TOUR', payload: newTour });
 
-      Alert.alert('Success', 'Tour created successfully!', [
+      showCustomAlert('Success', 'Tour created successfully!', [
         {
           text: 'Add Participants',
           onPress: () =>
@@ -84,7 +79,7 @@ const CreateTourScreen: React.FC = () => {
         },
       ]);
     } catch (error) {
-      Alert.alert('Error', 'Failed to create tour. Please try again.');
+      showErrorAlert('Error', 'Failed to create tour. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -101,7 +96,7 @@ const CreateTourScreen: React.FC = () => {
 
           <Input
             label="Tour Title *"
-            placeholder="e.g. Cox's Bazar Trip 2024"
+            placeholder="e.g. Cox's Bazar Trip 2025"
             value={formData.title}
             onChangeText={text => setFormData({ ...formData, title: text })}
             error={errors.title}
